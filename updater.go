@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -14,8 +15,11 @@ import (
 	"strings"
 )
 
+//go:embed VERSION
+var rawVersion string
+
 // AppVersion is the current version of the application
-const AppVersion = "0.0.3"
+var AppVersion = strings.TrimSpace(rawVersion)
 
 // UpdateInfo holds information about a potential update
 type UpdateInfo struct {
