@@ -14,8 +14,6 @@ type App struct {
 // NewApp creates a new App application struct
 func NewApp() *App {
 	store := NewStore()
-	// Seed initial data if database is empty so the user starts with a populated dashboard
-	_ = store.SeedMockData()
 	return &App{
 		store: store,
 	}
