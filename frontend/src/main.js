@@ -11,7 +11,7 @@ if (savedTheme === 'light') {
 }
 
 // Current App Version
-const AppVersion = "0.0.1";
+const AppVersion = "0.0.2";
 
 // Register Chart.js components
 Chart.register(...registerables);
