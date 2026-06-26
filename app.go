@@ -83,3 +83,8 @@ func (a *App) RestartApp() error {
 	return TriggerRestart()
 }
 
+// GetAppVersion returns the current application version string
+func (a *App) GetAppVersion() string {
+	return AppVersion
+}
+

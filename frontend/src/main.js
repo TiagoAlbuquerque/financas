@@ -10,9 +10,6 @@ if (savedTheme === 'light') {
   document.documentElement.classList.remove('light-theme');
 }
 
-// Current App Version
-const AppVersion = "0.0.3";
-
 // Register Chart.js components
 Chart.register(...registerables);
 
@@ -27,7 +24,8 @@ import {
   GetDataDir,
   CheckForUpdate,
   ApplyUpdate,
-  RestartApp
+  RestartApp,
+  GetAppVersion
 } from '../wailsjs/go/main/App';
 
 // Global state
@@ -42,7 +40,8 @@ const state = {
   charts: {
     main: null,
     category: null
-  }
+  },
+  appVersion: "0.0.0"
 };
 
 // Portuguese month names
@@ -70,6 +69,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('storage-path').title = path;
   } catch (err) {
     console.error("Erro ao carregar caminho de armazenamento:", err);
+  }
+
+  // Load app version from backend
+  try {
+    const version = await GetAppVersion();
+    state.appVersion = version;
+    const versionEl = document.getElementById('app-version');
+    if (versionEl) {
+      versionEl.innerText = version;
+    }
+  } catch (err) {
+    console.error("Erro ao carregar versão do app:", err);
   }
 
   // Set initial theme icon
@@ -232,12 +243,12 @@ function setupUpdateListeners() {
       updateInfoData = update;
 
       if (update.available) {
-        document.getElementById('update-current-version').innerText = `v${AppVersion}`;
+        document.getElementById('update-current-version').innerText = `v${state.appVersion}`;
         document.getElementById('update-new-version').innerText = update.version;
         document.getElementById('update-release-notes').innerText = update.body || 'Nenhuma nota de release fornecida.';
         showUpdateState('available');
       } else {
-        document.getElementById('update-current-version-info').innerText = `Versão atual: v${AppVersion}`;
+        document.getElementById('update-current-version-info').innerText = `Versão atual: v${state.appVersion}`;
         showUpdateState('uptodate');
       }
     } catch (err) {

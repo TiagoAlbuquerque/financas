@@ -14,6 +14,10 @@ export function DeleteTransaction(arg1, arg2, arg3) {
   return window['go']['main']['App']['DeleteTransaction'](arg1, arg2, arg3);
 }
 
+export function GetAppVersion() {
+  return window['go']['main']['App']['GetAppVersion']();
+}
+
 export function GetDataDir() {
   return window['go']['main']['App']['GetDataDir']();
 }

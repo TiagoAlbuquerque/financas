@@ -8,6 +8,8 @@ export function CheckForUpdate():Promise<main.UpdateInfo>;
 
 export function DeleteTransaction(arg1:string,arg2:number,arg3:number):Promise<void>;
 
+export function GetAppVersion():Promise<string>;
+
 export function GetDataDir():Promise<string>;
 
 export function GetMonthSummary(arg1:number,arg2:number):Promise<main.MonthSummary>;

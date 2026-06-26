@@ -320,6 +320,14 @@ html, body {
   color: #60a5fa;
 }
 
+.version-info-footer {
+  margin-top: 8px;
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  text-align: right;
+}
+
 /* Main Content Styling */
 .main-content {
   flex-grow: 1;
