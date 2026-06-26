@@ -24,6 +24,59 @@
   --transition-speed: 0.25s;
   --border-radius: 12px;
   --font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Theme-dependent alpha helper variables */
+  --bg-hover-white: rgba(255, 255, 255, 0.04);
+  --bg-hover-white-light: rgba(255, 255, 255, 0.03);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.2);
+  --input-bg: rgba(0, 0, 0, 0.25);
+  --th-bg: rgba(0, 0, 0, 0.1);
+  --border-color-faint: rgba(255, 255, 255, 0.03);
+  --table-row-hover: rgba(255, 255, 255, 0.02);
+  --modal-overlay-bg: rgba(7, 10, 19, 0.75);
+  --modal-shadow: rgba(0, 0, 0, 0.5);
+  --badge-income-bg: rgba(16, 185, 129, 0.12);
+  --badge-expense-bg: rgba(244, 63, 94, 0.12);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.05);
+  --btn-secondary-hover-bg: rgba(255, 255, 255, 0.08);
+}
+
+:root.light-theme {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  
+  --color-primary: #4f46e5;
+  --color-primary-hover: #3730a3;
+  --color-primary-glow: rgba(79, 70, 229, 0.1);
+  
+  --color-income: #10b981;
+  --color-income-glow: rgba(16, 185, 129, 0.1);
+  
+  --color-expense: #ef4444;
+  --color-expense-glow: rgba(239, 68, 68, 0.1);
+  
+  --color-balance: #3b82f6;
+  --color-balance-glow: rgba(59, 130, 246, 0.1);
+  
+  --bg-hover-white: rgba(0, 0, 0, 0.04);
+  --bg-hover-white-light: rgba(0, 0, 0, 0.02);
+  --scrollbar-thumb: rgba(0, 0, 0, 0.1);
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.2);
+  --input-bg: #f1f5f9;
+  --th-bg: #e2e8f0;
+  --border-color-faint: rgba(0, 0, 0, 0.04);
+  --table-row-hover: rgba(0, 0, 0, 0.015);
+  --modal-overlay-bg: rgba(15, 23, 42, 0.4);
+  --modal-shadow: rgba(15, 23, 42, 0.1);
+  --badge-income-bg: rgba(16, 185, 129, 0.1);
+  --badge-expense-bg: rgba(239, 68, 68, 0.1);
+  --btn-secondary-bg: #f1f5f9;
+  --btn-secondary-hover-bg: #e2e8f0;
 }
 
 * {
@@ -117,14 +170,14 @@ html, body {
 .nav-section::-webkit-scrollbar-thumb,
 .table-wrapper::-webkit-scrollbar-thumb,
 .years-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--scrollbar-thumb);
   border-radius: 4px;
 }
 
 .nav-section::-webkit-scrollbar-thumb:hover,
 .table-wrapper::-webkit-scrollbar-thumb:hover,
 .years-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--scrollbar-thumb-hover);
 }
 
 .nav-section h3 {
@@ -160,7 +213,7 @@ html, body {
 }
 
 .nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: var(--bg-hover-white);
   border-color: var(--border-color);
 }
 
@@ -202,7 +255,7 @@ html, body {
 }
 
 .year-header:hover {
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: var(--bg-hover-white-light);
 }
 
 .year-header .arrow {
@@ -241,7 +294,7 @@ html, body {
 
 .month-item:hover {
   color: var(--text-primary);
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: var(--bg-hover-white-light);
 }
 
 .month-item.active {
@@ -329,13 +382,13 @@ html, body {
 }
 
 .btn-secondary {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: var(--btn-secondary-bg);
   border-color: var(--border-color);
   color: var(--text-primary);
 }
 
 .btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--btn-secondary-hover-bg);
 }
 
 .btn-danger-icon {
@@ -510,7 +563,7 @@ html, body {
 }
 
 .input-search, .select-filter {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: var(--input-bg);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
   padding: 8px 14px;
@@ -546,7 +599,7 @@ html, body {
   font-weight: 600;
   padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--th-bg);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -554,7 +607,7 @@ html, body {
 
 .transactions-table td {
   padding: 14px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border-color-faint);
 }
 
 .transactions-table tbody tr {
@@ -562,7 +615,7 @@ html, body {
 }
 
 .transactions-table tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.02);
+  background-color: var(--table-row-hover);
 }
 
 .text-right { text-align: right; }
@@ -581,12 +634,12 @@ html, body {
 }
 
 .badge-income {
-  background-color: rgba(16, 185, 129, 0.12);
+  background-color: var(--badge-income-bg);
   color: var(--color-income);
 }
 
 .badge-expense {
-  background-color: rgba(244, 63, 94, 0.12);
+  background-color: var(--badge-expense-bg);
   color: var(--color-expense);
 }
 
@@ -615,7 +668,7 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(7, 10, 19, 0.75);
+  background-color: var(--modal-overlay-bg);
   backdrop-filter: blur(8px);
   z-index: 999;
   display: none;
@@ -638,7 +691,7 @@ html, body {
   width: 100%;
   max-width: 480px;
   padding: 28px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px var(--modal-shadow);
   transform: scale(0.92);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -691,7 +744,7 @@ html, body {
 .form-group input[type="number"],
 .form-group input[type="date"],
 .form-group select {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: var(--input-bg);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
   padding: 11px 14px;
@@ -723,7 +776,7 @@ html, body {
   padding: 12px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
-  background-color: rgba(255, 255, 255, 0.02);
+  background-color: var(--table-row-hover);
   cursor: pointer;
   font-weight: 600;
   transition: all 0.2s;
@@ -761,4 +814,35 @@ html, body {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Theme Toggle Button */
+.btn-theme-toggle {
+  background: var(--btn-secondary-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  padding: 0;
+  font-size: 1.1rem;
+}
+
+.btn-theme-toggle:hover {
+  background: var(--btn-secondary-hover-bg);
+  transform: scale(1.05);
+}
+
+.btn-theme-toggle .theme-icon {
+  transition: transform 0.5s ease, opacity 0.3s ease;
+  display: inline-block;
+}
+
+.btn-theme-toggle:hover .theme-icon {
+  transform: rotate(30deg);
 }

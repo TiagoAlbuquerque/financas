@@ -2,6 +2,14 @@ import './style.css';
 import './app.css';
 import { Chart, registerables } from 'chart.js';
 
+// Initialize theme from localStorage immediately to prevent flash
+const savedTheme = localStorage.getItem('theme') || 'dark';
+if (savedTheme === 'light') {
+  document.documentElement.classList.add('light-theme');
+} else {
+  document.documentElement.classList.remove('light-theme');
+}
+
 // Register Chart.js components
 Chart.register(...registerables);
 
@@ -58,6 +66,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error("Erro ao carregar caminho de armazenamento:", err);
   }
 
+  // Set initial theme icon
+  const themeIcon = document.querySelector('#btn-theme-toggle .theme-icon');
+  if (themeIcon) {
+    themeIcon.innerText = savedTheme === 'light' ? '🌙' : '☀️';
+  }
+
   // Setup DOM Event Listeners
   setupEventListeners();
 
@@ -66,6 +80,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function setupEventListeners() {
+  // Theme toggle button
+  document.getElementById('btn-theme-toggle').addEventListener('click', () => {
+    const isLight = document.documentElement.classList.toggle('light-theme');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    
+    const iconSpan = document.querySelector('#btn-theme-toggle .theme-icon');
+    if (iconSpan) {
+      iconSpan.innerText = isLight ? '🌙' : '☀️';
+    }
+    
+    updateChartsTheme();
+  });
+
   // Navigation sidebar
   document.getElementById('btn-nav-overall').addEventListener('click', () => {
     showOverallView();
@@ -426,17 +453,17 @@ function renderOverallChart() {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          labels: { color: '#9ca3af', font: { family: 'Nunito' } }
+          labels: { color: getCssVariable('--text-secondary') || '#9ca3af', font: { family: 'Nunito' } }
         }
       },
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: '#9ca3af', font: { family: 'Nunito' } }
+          ticks: { color: getCssVariable('--text-secondary') || '#9ca3af', font: { family: 'Nunito' } }
         },
         y: {
-          grid: { color: 'rgba(255, 255, 255, 0.05)' },
-          ticks: { color: '#9ca3af', font: { family: 'Nunito' } }
+          grid: { color: getCssVariable('--border-color') || 'rgba(255, 255, 255, 0.05)' },
+          ticks: { color: getCssVariable('--text-secondary') || '#9ca3af', font: { family: 'Nunito' } }
         }
       }
     }
@@ -486,17 +513,17 @@ function renderYearChart() {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          labels: { color: '#9ca3af', font: { family: 'Nunito' } }
+          labels: { color: getCssVariable('--text-secondary') || '#9ca3af', font: { family: 'Nunito' } }
         }
       },
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: '#9ca3af', font: { family: 'Nunito' } }
+          ticks: { color: getCssVariable('--text-secondary') || '#9ca3af', font: { family: 'Nunito' } }
         },
         y: {
-          grid: { color: 'rgba(255, 255, 255, 0.05)' },
-          ticks: { color: '#9ca3af', font: { family: 'Nunito' } }
+          grid: { color: getCssVariable('--border-color') || 'rgba(255, 255, 255, 0.05)' },
+          ticks: { color: getCssVariable('--text-secondary') || '#9ca3af', font: { family: 'Nunito' } }
         }
       }
     }
@@ -536,7 +563,7 @@ function renderCategoryChart() {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { labels: { color: '#9ca3af' } }
+          legend: { labels: { color: getCssVariable('--text-secondary') || '#9ca3af' } }
         }
       }
     });
@@ -556,7 +583,7 @@ function renderCategoryChart() {
       datasets: [{
         data: values,
         backgroundColor: colorPalette.slice(0, categories.length),
-        borderColor: 'rgba(19, 27, 46, 0.8)',
+        borderColor: getCssVariable('--bg-secondary') || 'rgba(19, 27, 46, 0.8)',
         borderWidth: 2
       }]
     },
@@ -567,7 +594,7 @@ function renderCategoryChart() {
         legend: {
           position: 'right',
           labels: {
-            color: '#9ca3af',
+            color: getCssVariable('--text-secondary') || '#9ca3af',
             font: { family: 'Nunito', size: 11 }
           }
         }
@@ -703,4 +730,31 @@ function escapeHTML(str) {
       '"': '&quot;'
     }[tag] || tag)
   );
+}
+
+// Theme and CSS Variables helper
+function getCssVariable(variableName) {
+  return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+}
+
+// Dynamically updates currently active charts with the theme colors
+function updateChartsTheme() {
+  const textSecondary = getCssVariable('--text-secondary') || '#9ca3af';
+  const borderColor = getCssVariable('--border-color') || 'rgba(255, 255, 255, 0.07)';
+  const bgSecondary = getCssVariable('--bg-secondary') || '#131b2e';
+
+  if (state.charts.main) {
+    state.charts.main.options.plugins.legend.labels.color = textSecondary;
+    state.charts.main.options.scales.x.ticks.color = textSecondary;
+    state.charts.main.options.scales.y.ticks.color = textSecondary;
+    state.charts.main.options.scales.y.grid.color = borderColor;
+    state.charts.main.update();
+  }
+  if (state.charts.category) {
+    state.charts.category.options.plugins.legend.labels.color = textSecondary;
+    if (state.charts.category.data.datasets && state.charts.category.data.datasets[0]) {
+      state.charts.category.data.datasets[0].borderColor = bgSecondary;
+    }
+    state.charts.category.update();
+  }
 }
