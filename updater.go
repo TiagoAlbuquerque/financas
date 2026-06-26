@@ -15,7 +15,7 @@ import (
 )
 
 // AppVersion is the current version of the application
-const AppVersion = "0.0.2"
+const AppVersion = "0.0.3"
 
 // UpdateInfo holds information about a potential update
 type UpdateInfo struct {
@@ -348,24 +348,4 @@ func CleanupOldBinary() {
 	}
 }
 
-// TriggerRestart spawns the new binary and terminates the current process
-func TriggerRestart() error {
-	exePath, err := os.Executable()
-	if err != nil {
-		return err
-	}
 
-	cmd := exec.Command(exePath)
-	if runtime.GOOS != "windows" {
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-	}
-
-	err = cmd.Start()
-	if err != nil {
-		return err
-	}
-
-	os.Exit(0)
-	return nil
-}
