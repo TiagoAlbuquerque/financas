@@ -21,6 +21,17 @@ var rawVersion string
 // AppVersion is the current version of the application
 var AppVersion = strings.TrimSpace(rawVersion)
 
+// originalExePath stores the absolute path to the executable before any rename occurs
+var originalExePath string
+
+func init() {
+	var err error
+	originalExePath, err = os.Executable()
+	if err != nil {
+		originalExePath = ""
+	}
+}
+
 // UpdateInfo holds information about a potential update
 type UpdateInfo struct {
 	Available   bool   `json:"available"`

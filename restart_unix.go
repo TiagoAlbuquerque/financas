@@ -10,9 +10,13 @@ import (
 
 // TriggerRestart spawns the new binary in a detached session and terminates the current process
 func TriggerRestart() error {
-	exePath, err := os.Executable()
-	if err != nil {
-		return err
+	exePath := originalExePath
+	if exePath == "" {
+		var err error
+		exePath, err = os.Executable()
+		if err != nil {
+			return err
+		}
 	}
 
 	cmd := exec.Command(exePath)
@@ -21,7 +25,7 @@ func TriggerRestart() error {
 		Setsid: true,
 	}
 
-	err = cmd.Start()
+	err := cmd.Start()
 	if err != nil {
 		return err
 	}

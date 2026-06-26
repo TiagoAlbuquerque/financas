@@ -9,13 +9,17 @@ import (
 
 // TriggerRestart spawns the new binary and terminates the current process
 func TriggerRestart() error {
-	exePath, err := os.Executable()
-	if err != nil {
-		return err
+	exePath := originalExePath
+	if exePath == "" {
+		var err error
+		exePath, err = os.Executable()
+		if err != nil {
+			return err
+		}
 	}
 
 	cmd := exec.Command(exePath)
-	err = cmd.Start()
+	err := cmd.Start()
 	if err != nil {
 		return err
 	}
