@@ -12,6 +12,9 @@ import (
 var assets embed.FS
 
 func main() {
+	// Cleanup any temporary old binary left behind from an update
+	CleanupOldBinary()
+
 	// Create an instance of the app structure
 	app := NewApp()
 

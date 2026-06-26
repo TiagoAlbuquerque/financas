@@ -846,3 +846,139 @@ html, body {
 .btn-theme-toggle:hover .theme-icon {
   transform: rotate(30deg);
 }
+
+/* Update Sidebar Button */
+.btn-check-update {
+  background: var(--btn-secondary-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-family: var(--font-family);
+  font-weight: 600;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  transition: all var(--transition-speed) ease;
+}
+
+.btn-check-update:hover {
+  background: var(--btn-secondary-hover-bg);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Update Modal specific styles */
+.update-state-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.loading-spinner-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.spin-icon {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+.update-status-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.success-text {
+  color: var(--color-income) !important;
+}
+
+.version-badge-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.current-version-badge {
+  background-color: var(--bg-hover-white);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.new-version-badge {
+  background-color: var(--color-primary-glow);
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.arrow-right {
+  color: var(--text-secondary);
+}
+
+.release-notes-box {
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.release-notes-box h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.release-notes-box pre {
+  font-family: inherit;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.update-subtext {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.error-message-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-expense);
+}
+
+.error-details-text {
+  font-family: monospace;
+  font-size: 0.8rem;
+  background-color: rgba(244, 63, 94, 0.08);
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  color: var(--color-expense);
+  padding: 8px 12px;
+  border-radius: 6px;
+  word-break: break-all;
+  max-height: 100px;
+  overflow-y: auto;
+}

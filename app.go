@@ -67,3 +67,21 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Olá %s! O sistema de finanças está rodando localmente em: %s", name, a.store.DataDir)
 }
 
+// CheckForUpdate calls the internal updater to check if a new version is available on GitHub
+func (a *App) CheckForUpdate() (*UpdateInfo, error) {
+	return CheckForUpdate()
+}
+
+// ApplyUpdate downloads the new release asset and replaces the active binary
+func (a *App) ApplyUpdate(info *UpdateInfo) error {
+	if info == nil {
+		return fmt.Errorf("informações de atualização inválidas")
+	}
+	return DownloadAndInstallUpdate(info)
+}
+
+// RestartApp restarts the application by spawning the new binary and exiting
+func (a *App) RestartApp() error {
+	return TriggerRestart()
+}
+

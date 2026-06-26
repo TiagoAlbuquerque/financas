@@ -10,6 +10,9 @@ if (savedTheme === 'light') {
   document.documentElement.classList.remove('light-theme');
 }
 
+// Current App Version
+const AppVersion = "1.0.0";
+
 // Register Chart.js components
 Chart.register(...registerables);
 
@@ -21,7 +24,10 @@ import {
   GetMonthTransactions,
   SaveTransaction,
   DeleteTransaction,
-  GetDataDir
+  GetDataDir,
+  CheckForUpdate,
+  ApplyUpdate,
+  RestartApp
 } from '../wailsjs/go/main/App';
 
 // Global state
@@ -199,6 +205,85 @@ function setupEventListeners() {
   document.getElementById('filter-category').addEventListener('change', () => {
     renderTransactionsTable();
   });
+
+  // Setup auto-update event listeners
+  setupUpdateListeners();
+}
+
+let updateInfoData = null;
+
+function setupUpdateListeners() {
+  const updateModal = document.getElementById('update-modal');
+  const btnCheckUpdate = document.getElementById('btn-check-update');
+  
+  // Close buttons
+  document.getElementById('update-modal-close').addEventListener('click', closeUpdateModal);
+  document.getElementById('btn-ignore-update').addEventListener('click', closeUpdateModal);
+  document.getElementById('btn-close-update-error').addEventListener('click', closeUpdateModal);
+  document.getElementById('btn-close-update-uptodate').addEventListener('click', closeUpdateModal);
+
+  // Check update action
+  btnCheckUpdate.addEventListener('click', async () => {
+    showUpdateState('checking');
+    updateModal.classList.add('open');
+
+    try {
+      const update = await CheckForUpdate();
+      updateInfoData = update;
+
+      if (update.available) {
+        document.getElementById('update-current-version').innerText = `v${AppVersion}`;
+        document.getElementById('update-new-version').innerText = update.version;
+        document.getElementById('update-release-notes').innerText = update.body || 'Nenhuma nota de release fornecida.';
+        showUpdateState('available');
+      } else {
+        document.getElementById('update-current-version-info').innerText = `Versão atual: v${AppVersion}`;
+        showUpdateState('uptodate');
+      }
+    } catch (err) {
+      console.error(err);
+      document.getElementById('update-error-details').innerText = String(err);
+      showUpdateState('error');
+    }
+  });
+
+  // Start download and apply update action
+  document.getElementById('btn-start-update').addEventListener('click', async () => {
+    if (!updateInfoData) return;
+    showUpdateState('downloading');
+
+    try {
+      await ApplyUpdate(updateInfoData);
+      showUpdateState('ready');
+    } catch (err) {
+      console.error(err);
+      document.getElementById('update-error-details').innerText = String(err);
+      showUpdateState('error');
+    }
+  });
+
+  // Restart app action
+  document.getElementById('btn-restart-app').addEventListener('click', async () => {
+    try {
+      await RestartApp();
+    } catch (err) {
+      alert("Erro ao reiniciar o aplicativo: " + err);
+    }
+  });
+}
+
+function showUpdateState(state) {
+  const states = ['checking', 'available', 'downloading', 'ready', 'error', 'uptodate'];
+  states.forEach(s => {
+    const el = document.getElementById(`update-${s}-state`);
+    if (el) el.style.display = 'none';
+  });
+  const el = document.getElementById(`update-${state}-state`);
+  if (el) el.style.display = 'block';
+}
+
+function closeUpdateModal() {
+  document.getElementById('update-modal').classList.remove('open');
 }
 
 // State navigation actions

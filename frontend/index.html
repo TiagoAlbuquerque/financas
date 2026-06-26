@@ -30,6 +30,10 @@
                 </div>
             </div>
 
+            <button id="btn-check-update" class="btn-check-update">
+                <span class="icon">🚀</span> Buscar Atualização
+            </button>
+
             <div class="storage-info">
                 <span>📁 Armazenado em:</span>
                 <p id="storage-path" title="...">Carregando...</p>
@@ -200,6 +204,66 @@
                     <button type="submit" class="btn btn-primary">Salvar Transação</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div id="update-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Atualização do Sistema</h2>
+                <button id="update-modal-close" class="modal-close-btn">&times;</button>
+            </div>
+            <div class="update-modal-body">
+                <div id="update-checking-state" class="update-state-content">
+                    <p class="loading-spinner-container">
+                        <span class="icon spin-icon">🔄</span> Buscando atualizações no GitHub...
+                    </p>
+                </div>
+                <div id="update-available-state" class="update-state-content" style="display: none;">
+                    <p class="update-status-title">Uma nova versão está disponível!</p>
+                    <div class="version-badge-container">
+                        <span class="current-version-badge" id="update-current-version">v1.0.0</span>
+                        <span class="arrow-right">➔</span>
+                        <span class="new-version-badge" id="update-new-version">v1.1.0</span>
+                    </div>
+                    <div class="release-notes-box">
+                        <h4>Notas da Release:</h4>
+                        <pre id="update-release-notes">Carregando...</pre>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" id="btn-ignore-update" class="btn btn-secondary">Mais Tarde</button>
+                        <button type="button" id="btn-start-update" class="btn btn-primary">Atualizar Agora</button>
+                    </div>
+                </div>
+                <div id="update-downloading-state" class="update-state-content" style="display: none;">
+                    <p class="loading-spinner-container">
+                        <span class="icon spin-icon">🔄</span> Baixando nova versão do aplicativo...
+                    </p>
+                    <p class="update-subtext">Por favor, não feche o aplicativo.</p>
+                </div>
+                <div id="update-ready-state" class="update-state-content" style="display: none;">
+                    <p class="update-status-title success-text">Nova versão instalada com sucesso!</p>
+                    <p class="update-subtext">O aplicativo precisa ser reiniciado para aplicar a atualização.</p>
+                    <div class="modal-actions">
+                        <button type="button" id="btn-restart-app" class="btn btn-primary">Reiniciar Agora</button>
+                    </div>
+                </div>
+                <div id="update-error-state" class="update-state-content" style="display: none;">
+                    <p class="error-message-text">Erro ao verificar ou instalar atualizações.</p>
+                    <p id="update-error-details" class="error-details-text"></p>
+                    <div class="modal-actions">
+                        <button type="button" id="btn-close-update-error" class="btn btn-secondary">Fechar</button>
+                    </div>
+                </div>
+                <div id="update-uptodate-state" class="update-state-content" style="display: none;">
+                    <p>O aplicativo já está na versão mais recente!</p>
+                    <p class="update-subtext" id="update-current-version-info">Versão atual: v1.0.0</p>
+                    <div class="modal-actions">
+                        <button type="button" id="btn-close-update-uptodate" class="btn btn-secondary">Ok</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

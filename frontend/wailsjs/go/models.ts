@@ -141,6 +141,28 @@ export namespace main {
 		}
 	}
 	
+	export class UpdateInfo {
+	    available: boolean;
+	    version: string;
+	    body: string;
+	    downloadUrl: string;
+	    assetName: string;
+	    assetId: number;
+	
+	    static createFrom(source: any = {}) {
+	        return new UpdateInfo(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.available = source["available"];
+	        this.version = source["version"];
+	        this.body = source["body"];
+	        this.downloadUrl = source["downloadUrl"];
+	        this.assetName = source["assetName"];
+	        this.assetId = source["assetId"];
+	    }
+	}
 	export class YearSummary {
 	    year: number;
 	    earnings: number;
