@@ -15,7 +15,7 @@ import (
 )
 
 // AppVersion is the current version of the application
-const AppVersion = "0.0.1"
+const AppVersion = "0.0.1r"
 
 // UpdateInfo holds information about a potential update
 type UpdateInfo struct {
@@ -187,8 +187,15 @@ func isNewerVersion(current, latest string) bool {
 	lParts := strings.Split(l, ".")
 
 	for i := 0; i < len(cParts) && i < len(lParts); i++ {
-		cNum, _ := strconv.Atoi(cParts[i])
-		lNum, _ := strconv.Atoi(lParts[i])
+		cNum, errC := strconv.Atoi(cParts[i])
+		lNum, errL := strconv.Atoi(lParts[i])
+		if errC != nil || errL != nil {
+			// Fallback to string comparison if one of the parts is non-numeric
+			if cParts[i] != lParts[i] {
+				return lParts[i] > cParts[i]
+			}
+			continue
+		}
 		if lNum > cNum {
 			return true
 		}
